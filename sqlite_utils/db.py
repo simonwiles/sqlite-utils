@@ -13,7 +13,7 @@ import pathlib
 import textwrap
 import uuid
 
-SQLITE_MAX_VARS = 999
+SQLITE_MAX_VARIABLE_NUMBER = 999
 
 
 try:
@@ -1573,9 +1573,9 @@ class Table(Queryable):
             return self  # It was an empty list
         num_columns = len(first_record.keys())
         assert (
-            num_columns <= SQLITE_MAX_VARS
-        ), "Rows can have a maximum of {} columns".format(SQLITE_MAX_VARS)
-        batch_size = max(1, min(batch_size, SQLITE_MAX_VARS // num_columns))
+            num_columns <= SQLITE_MAX_VARIABLE_NUMBER
+        ), "Rows can have a maximum of {} columns".format(SQLITE_MAX_VARIABLE_NUMBER)
+        batch_size = max(1, min(batch_size, SQLITE_MAX_VARIABLE_NUMBER // num_columns))
         self.last_rowid = None
         self.last_pk = None
         if truncate and self.exists():
