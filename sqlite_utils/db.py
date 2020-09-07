@@ -14,6 +14,7 @@ import textwrap
 import uuid
 
 SQLITE_MAX_VARIABLE_NUMBER = 999
+SQLITE_MAX_COLUMN = 2000
 
 
 try:
@@ -1572,9 +1573,10 @@ class Table(Queryable):
         except StopIteration:
             return self  # It was an empty list
         num_columns = len(first_record.keys())
+        max_columns = min(SQLITE_MAX_VARIABLE_NUMBER, SQLITE_MAX_COLUMN)
         assert (
-            num_columns <= SQLITE_MAX_VARIABLE_NUMBER
-        ), "Rows can have a maximum of {} columns".format(SQLITE_MAX_VARIABLE_NUMBER)
+            num_columns <= max_columns
+        ), "Rows can have a maximum of {} columns".format(max_columns)
         batch_size = max(1, min(batch_size, SQLITE_MAX_VARIABLE_NUMBER // num_columns))
         self.last_rowid = None
         self.last_pk = None
